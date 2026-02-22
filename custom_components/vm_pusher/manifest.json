@@ -1,0 +1,10 @@
+{
+  "domain": "vm_pusher",
+  "name": "VictoriaMetrics Pusher",
+  "version": "1.0.0",
+  "documentation": "https://github.com/antonzaytsev/ha-vm-pusher",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@antonzaytsev"],
+  "iot_class": "local_push"
+}
