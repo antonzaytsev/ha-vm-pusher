@@ -37,13 +37,15 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     interval = conf["interval"]
     host = conf["host"]
 
+    LOGGER.info("vm_pusher starting — url=%s host=%s interval=%ds", url, host, interval)
+
     async def push(_now=None) -> None:
         try:
             lines = await hass.async_add_executor_job(_collect, host)
             await _push(url, lines)
-            LOGGER.debug("pushed %d metrics", len(lines))
+            LOGGER.info("vm_pusher: pushed %d metrics to %s", len(lines), url)
         except Exception as exc:  # noqa: BLE001
-            LOGGER.warning("push failed: %s", exc)
+            LOGGER.error("vm_pusher: push failed — %s: %s", type(exc).__name__, exc)
 
     await push()
     async_track_time_interval(hass, push, timedelta(seconds=interval))
